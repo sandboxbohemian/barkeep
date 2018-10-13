@@ -1,8 +1,9 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
+/bin/
 
-### STS ###
+### Eclipse ###
 .apt_generated
 .classpath
 .factorypath
