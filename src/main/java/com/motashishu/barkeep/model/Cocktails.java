@@ -31,10 +31,4 @@ public class Cocktails {
 	private List<String> glassware;
 	@JsonView(Views.Recipe.class)
 	private String method;
-	
-	class MeasuredIngredient {
-		private String name;
-		private int portion;
-		private String unit;
-	}
 }
