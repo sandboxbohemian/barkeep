@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.motashishu.barkeep.handler.CocktailService;
+import com.motashishu.barkeep.model.Cocktails;
+import com.motashishu.barkeep.model.Views;
 
 import reactor.core.publisher.Mono;
 
@@ -41,8 +44,9 @@ public class BarController {
 				.collectList();
 	}
 	
-	@GetMapping(path="bar/recipe/{drink}", consumes=MediaType.TEXT_PLAIN_VALUE, produces=MediaType.TEXT_PLAIN_VALUE)
-	public Mono<String> getRecipe(@PathVariable("drink") String drink) {
+	@JsonView(Views.Recipe.class)
+	@GetMapping(path="bar/recipe/{drink}", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public Mono<Cocktails> getRecipe(@PathVariable("drink") String drink) {
 		return cocktailService.getRecipe(drink);
 	}
 	

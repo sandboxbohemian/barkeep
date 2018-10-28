@@ -6,6 +6,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +21,15 @@ public class Cocktails {
 	private ObjectId _id;
 	private String name;
 	private List<String> liquor;
+	@JsonView(Views.Recipe.class)
 	private List<MeasuredIngredient> ingredients;
+	@JsonView(Views.Recipe.class)
 	private List<MeasuredIngredient> garnish;
 	private List<String> themes;
 	private String servingTemperature;
+	@JsonView(Views.Recipe.class)
 	private List<String> glassware;
+	@JsonView(Views.Recipe.class)
 	private String method;
 	
 	class MeasuredIngredient {

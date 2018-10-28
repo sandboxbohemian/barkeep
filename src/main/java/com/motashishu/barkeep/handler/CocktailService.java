@@ -37,9 +37,8 @@ public class CocktailService {
 				.map(Cocktails::getName);
 	}
 
-	public Mono<String> getRecipe(String drink) {
-		return cocktailDao.findByName(drink)
-				.map(Cocktails::getMethod);
+	public Mono<Cocktails> getRecipe(String drink) {
+		return cocktailDao.findByName(drink);
 	}
 
 }
