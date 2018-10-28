@@ -6,12 +6,10 @@ import org.springframework.stereotype.Service;
 import com.motashishu.barkeep.dao.CocktailRepository;
 import com.motashishu.barkeep.model.Cocktails;
 
-import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-@Slf4j
 public class CocktailService {
 	
 	@Autowired
@@ -29,9 +27,6 @@ public class CocktailService {
 		return inventory.getAvailable()
 				.collectList()
 				.flatMapMany(t -> {
-					System.out.println(t.toString());
-					//String[] liqArr = t.toArray(new String[t.size()]);
-					//System.out.println(liqArr);
 					return cocktailDao.findBy(t);
 				})
 				.map(Cocktails::getName);
@@ -40,6 +35,11 @@ public class CocktailService {
 	public Mono<String> getRandomDrink() {
 		return cocktailDao.findRandomCocktail()
 				.map(Cocktails::getName);
+	}
+
+	public Mono<String> getRecipe(String drink) {
+		return cocktailDao.findByName(drink)
+				.map(Cocktails::getMethod);
 	}
 
 }
