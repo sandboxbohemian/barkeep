@@ -1,5 +1,7 @@
 package com.motashishu.barkeep.handler;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,11 @@ public class CocktailService {
 
 	public Mono<Cocktails> getRecipe(String drink) {
 		return cocktailDao.findByName(drink);
+	}
+
+	public Flux<String> getDrinksByTheme(List<String> themes) {
+		return cocktailDao.findByThemesIn(themes)
+				.map(Cocktails::getName);
 	}
 
 }

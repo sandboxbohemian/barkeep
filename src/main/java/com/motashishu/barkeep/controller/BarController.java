@@ -39,15 +39,15 @@ public class BarController {
 	}
 	
 	@GetMapping(path="bar/menu/themes", consumes=MediaType.TEXT_PLAIN_VALUE, produces=MediaType.TEXT_PLAIN_VALUE)
-	public  Mono<List<String>> getCocktailsByTheme() {
-		return cocktailService.getPossibleDrinks()
+	public  Mono<List<String>> getCocktailsByTheme(List<String> themes) {
+		return cocktailService.getDrinksByTheme(themes)
 				.collectList();
 	}
 	
 	@JsonView(Views.Recipe.class)
 	@GetMapping(path="bar/recipe/{drink}", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public Mono<Cocktails> getRecipe(@PathVariable("drink") String drink) {
-		return cocktailService.getRecipe(drink);
+		return cocktailService.getRecipe(drink.toLowerCase());
 	}
 	
 }
