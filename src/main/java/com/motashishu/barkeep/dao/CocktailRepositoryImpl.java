@@ -1,7 +1,9 @@
 package com.motashishu.barkeep.dao;
 
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.sample;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -34,6 +36,22 @@ public class CocktailRepositoryImpl implements CocktailRepositoryCustom {
 	
 	private Cocktails getRandom() {
 		Aggregation randomize = newAggregation(
+				sample(1));
+		return mongoTemplate.aggregate(randomize, Cocktails.class, Cocktails.class)
+				.getMappedResults()
+				.stream()
+				.findAny()
+				.get();
+	}
+
+	@Override
+	public Mono<Cocktails> findRandomCocktail(String liquor) {
+		return Mono.just(getRandom(liquor));
+	}
+	
+	private Cocktails getRandom(String liquor) {
+		Aggregation randomize = newAggregation(
+				match(where("liquor").is(liquor)),
 				sample(1));
 		return mongoTemplate.aggregate(randomize, Cocktails.class, Cocktails.class)
 				.getMappedResults()

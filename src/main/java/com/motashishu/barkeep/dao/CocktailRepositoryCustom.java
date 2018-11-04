@@ -7,4 +7,6 @@ import reactor.core.publisher.Mono;
 public interface CocktailRepositoryCustom {
 
 	public Mono<Cocktails> findRandomCocktail();
+
+	Mono<Cocktails> findRandomCocktail(String liquor);
 }

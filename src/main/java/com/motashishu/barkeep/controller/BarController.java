@@ -33,9 +33,15 @@ public class BarController {
 				.collectList();
 	}
 	
-	@GetMapping(path="bar/menu/surpriseme", consumes=MediaType.TEXT_PLAIN_VALUE, produces=MediaType.TEXT_PLAIN_VALUE)
+	@GetMapping(path="bar/menu/surpriseme", consumes=MediaType.TEXT_PLAIN_VALUE)
 	public Mono<String> getRandomCocktail() {
 		return cocktailService.getRandomDrink();
+	}
+	
+	@GetMapping(path="bar/menu/surpriseme/{liquor}", consumes=MediaType.TEXT_PLAIN_VALUE)
+	public Mono<String> getRandomCocktail(@PathVariable String liquor) {
+		System.out.println("liquor: " + liquor);
+		return cocktailService.getRandomDrink(liquor);
 	}
 	
 	@GetMapping(path="bar/menu/themes", consumes=MediaType.TEXT_PLAIN_VALUE, produces=MediaType.TEXT_PLAIN_VALUE)

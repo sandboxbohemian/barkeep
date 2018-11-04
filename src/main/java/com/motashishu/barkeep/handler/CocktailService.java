@@ -34,17 +34,22 @@ public class CocktailService {
 				.map(Cocktails::getName);
 	}
 
-	public Mono<String> getRandomDrink() {
-		return cocktailDao.findRandomCocktail()
-				.map(Cocktails::getName);
-	}
-
 	public Mono<Cocktails> getRecipe(String drink) {
 		return cocktailDao.findByName(drink);
 	}
 
 	public Flux<String> getDrinksByTheme(List<String> themes) {
 		return cocktailDao.findByThemesIn(themes)
+				.map(Cocktails::getName);
+	}
+
+	public Mono<String> getRandomDrink() {
+		return cocktailDao.findRandomCocktail()
+				.map(Cocktails::getName);
+	}
+
+	public Mono<String> getRandomDrink(String liquor) {
+		return cocktailDao.findRandomCocktail(liquor)
 				.map(Cocktails::getName);
 	}
 
